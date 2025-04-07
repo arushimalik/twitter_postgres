@@ -397,7 +397,7 @@ def insert_tweet(connection,tweet):
                     )
                 VALUES
                     ( :id_tweets,
-                    , :tag
+                      :tag
                     ) ON CONFLICT DO NOTHING
                 ''')
  
