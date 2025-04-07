@@ -133,20 +133,20 @@ def insert_tweet(connection,tweet):
                 , withheld_in_countries -- tweet['user'].get('withheld_in_countries', None)
                 )
             VALUES
-                ( :id_users
-                  :created_at
-                  :updated_at
-                  :id_urls
-                  :friends_count
-                  :listed_count
-                  :favourites_count
-                  :statuses_count
-                  :protected
-                  :verified
-                  :screen_name
-                  :name
-                  :location
-                  :description
+                ( :id_users,
+                  :created_at,
+                  :updated_at,
+                  :id_urls,
+                  :friends_count,
+                  :listed_count,
+                  :favourites_count,
+                  :statuses_count,
+                  :protected,
+                  :verified,
+                  :screen_name,
+                  :name,
+                  :location,
+                  :description,
                   :withheld_in_countries
                 ) ON CONFLICT DO NOTHING;
              ''')
@@ -226,7 +226,7 @@ def insert_tweet(connection,tweet):
         if tweet.get('in_reply_to_user_id',None) is not None:
             sql=sqlalchemy.sql.text('''
                 INSERT INTO users 
-                    ( id_users
+                    ( id_users -- tweet['in_reply_to_user_id']
                     )
                 VALUES 
                     ( :id_users
@@ -320,7 +320,7 @@ def insert_tweet(connection,tweet):
                     , id_urls -- id_urls
                     )
                 VALUES
-                    ( :id_tweets
+                    ( :id_tweets,
                       :id_urls
                     ) ON CONFLICT DO NOTHING
                 ''')
@@ -367,7 +367,7 @@ def insert_tweet(connection,tweet):
                     , id_users -- mention['id']
                     )
                 VALUES 
-                    ( :id_tweets
+                    ( :id_tweets,
                       :id_users
                     ) ON CONFLICT DO NOTHING
                 ''')
@@ -396,7 +396,7 @@ def insert_tweet(connection,tweet):
                     , tag -- remove_nulls(tag)
                     )
                 VALUES
-                    ( :id_tweets
+                    ( :id_tweets,
                     , :tag
                     ) ON CONFLICT DO NOTHING
                 ''')
@@ -427,8 +427,8 @@ def insert_tweet(connection,tweet):
                     , type -- remove_nulls(medium['type'])
                     )
                 VALUES 
-                    ( :id_tweets
-                      :id_urls
+                    ( :id_tweets,
+                      :id_urls,
                       :type
                     ) ON CONFLICT DO NOTHING
                 ''')
