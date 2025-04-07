@@ -47,13 +47,13 @@ def get_id_urls(url, connection):
     This function cannot be tested with standard python testing tools because it interacts with the db.
     '''
     sql = sqlalchemy.sql.text('''
-    insert into urls 
-        (url)
-        values
-        (:url)
-    on conflict do nothing
-    returning id_urls
-    ;
+        insert into urls 
+            (url)
+            values
+            (:url)
+        on conflict do nothing
+        returning id_urls
+        ;
     ''')
     res = connection.execute(sql,{'url':url}).first()
 
@@ -114,7 +114,7 @@ def insert_tweet(connection,tweet):
             user_id_urls = get_id_urls(tweet['user']['url'], connection)
 
         # create/update the user
-        sql = sqlalchemy.sql.text(f'''
+        sql = sqlalchemy.sql.text('''
             INSERT INTO users
                 ( id_users  -- tweet['user']['id']
                 , created_at -- tweet['user']['created_at']
@@ -151,7 +151,7 @@ def insert_tweet(connection,tweet):
                 ) ON CONFLICT DO NOTHING;
              ''')
 
-        res = connection.execute(sql,{
+        connection.execute(sql,{
             'id_users': tweet['user']['id'],
             'created_at': tweet['user']['created_at'],
             'updated_at': tweet['created_at'],
@@ -424,7 +424,7 @@ def insert_tweet(connection,tweet):
                 INSERT INTO tweet_media 
                     ( id_tweets -- tweet['id']
                     , id_urls -- id_urls
-                    , type -- remove_nulls(medium['type']
+                    , type -- remove_nulls(medium['type'])
                     )
                 VALUES 
                     ( :id_tweets
