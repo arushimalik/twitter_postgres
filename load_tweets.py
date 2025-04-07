@@ -122,7 +122,7 @@ def insert_tweet(connection,tweet):
                 , id_urls -- user_id_urls
                 , friends_count -- tweet['user']['friends_count']
                 , listed_count -- tweet['user']['listed_count']
-                , favourite_count -- tweet['user']['favourites_count']
+                , favourites_count -- tweet['user']['favourites_count']
                 , statuses_count -- tweet['user']['statuses_count']
                 , protected -- tweet['user']['protected']
                 , verified -- tweet['user']['verified']
@@ -139,7 +139,7 @@ def insert_tweet(connection,tweet):
                   :id_urls
                   :friends_count
                   :listed_count
-                  :favourite_count
+                  :favourites_count
                   :statuses_count
                   :protected
                   :verified
